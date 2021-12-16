@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-
-import { Recipe } from './recipe.model';
-import { Ingredient } from '../shared/ingredient.model';
-import * as ShoppingListActions from 'src/app/shopping-list/store/shopping-list.actions';
-import * as fromShoppingList from 'src/app/shopping-list/store/shopping-list.reducer';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import * as ShoppingListActions from 'src/app/shopping-list/store/shopping-list.actions';
+
+import { Ingredient } from '../shared/ingredient.model';
+import * as fromApp from '../store/app.reducer';
+import { Recipe } from './recipe.model';
 
 @Injectable()
 export class RecipeService {
@@ -13,7 +13,7 @@ export class RecipeService {
 
   private recipes: Recipe[] = [];
 
-  constructor(private store: Store<fromShoppingList.AppState>) {}
+  constructor(private store: Store<fromApp.AppState>) {}
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;
