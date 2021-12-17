@@ -3,14 +3,10 @@ import * as RecipeActions from './recipes.actions';
 
 export interface State {
   recipes: Recipe[];
-  editRecipe: Recipe;
-  editRecipeIndex: number;
 }
 
 const initialState = {
   recipes: [],
-  editRecipe: null,
-  editRecipeIndex: -1,
 };
 
 export function recipeReducer(
@@ -21,7 +17,7 @@ export function recipeReducer(
     case RecipeActions.ADD_RECIPE:
       return {
         ...state,
-        recipes: [...state.recipes, action.payload],
+        recipes: [...state.recipes, { ...action.payload }],
       };
 
     case RecipeActions.SET_RECIPES:
@@ -30,26 +26,19 @@ export function recipeReducer(
         recipes: [...action.payload],
       };
 
-    case RecipeActions.EDIT_RECIPE:
-      const recipeToEdit = {
-        ...state.recipes.find((_, idx) => idx === action.payload),
-      };
-
-      return {
-        ...state,
-        editRecipe: recipeToEdit,
-        editRecipeIndex: action.payload,
-      };
-
     case RecipeActions.UPDATE_RECIPE:
-      const newRecipes = state.recipes.filter(
-        (rec, idx) => idx !== state.editRecipeIndex
-      );
-      const updatedRecipe = action.payload;
+      const updatedRecipe = {
+        ...state.recipes[action.payload.index],
+        ...action.payload.newRecipe,
+      };
+
+      const updatedRecipes = [...state.recipes];
+
+      updatedRecipes[action.payload.index] = updatedRecipe;
 
       return {
         ...state,
-        recipes: [...newRecipes, updatedRecipe],
+        recipes: updatedRecipes,
       };
 
     case RecipeActions.DELETE_RECIPE:
