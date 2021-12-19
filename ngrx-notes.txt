@@ -1,0 +1,27 @@
+--	NgRx (Angular Redux)
+
+	--	NgRx provides a streamlined, highly structured state management solution.
+
+	--	The issue with angular's built-in state management with services and RxJs is that no specific pattern about how to manage state is enforced, so on bigger teams building bigger apps is common for multiple patterns to be implemented, which can lead to complex state management and a code that is difficult to maintain
+
+	--	Redux Pattern
+
+		==	Store
+			--	One central store to manage the application state
+
+		==	Actions
+			--	Actions are dispatched with payloads to the store to update the state
+
+		==	Reducer
+			--	Reducer gets the actions and run code to update state in an immutable way
+
+			--	The reducer will then return a new, updated, state (an edited copy of the old state) and will then send the new state to the Store to overwrite the old state 
+
+		==	Effect
+			--	An Effect allows you to watch a given action type and react to that action every time it's been dispatched
+
+			--	Any side effects or asynchronous code should be an effect, not a reducer action
+
+		--	Services and components receive state from the store, so the single source of truth in the application will be the store
+
+	--	Any action that is dispatched always reaches all reducers
